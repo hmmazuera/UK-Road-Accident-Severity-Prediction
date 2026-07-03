@@ -1,10 +1,14 @@
+venv/
 .venv/
 __pycache__/
-.ipynb_checkpoints/
+*.pyc
 .DS_Store
 
 data/raw/
 data/interim/
 data/processed/
-*.csv
-models/
+
+models/production_model.joblib
+models/production_preprocessor.joblib
+
+.ipynb_checkpoints/

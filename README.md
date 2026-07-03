@@ -15,6 +15,17 @@ The project covers the full machine learning workflow:
 - FastAPI backend
 - Streamlit web application
 
+## Technologies
+
+- Python
+- Scikit-learn
+- Pandas
+- NumPy
+- Matplotlib
+- FastAPI
+- Streamlit
+- Docker
+
 ## Problem Statement
 
 Road traffic collisions can have different severity levels depending on road, environmental, vehicle and casualty-related factors.
@@ -61,6 +72,18 @@ The final model selected was a Random Forest classifier.
 
 F1 Macro was used as the main metric because the dataset is highly imbalanced.
 
+## Model Files
+
+The trained production model is not included in this repository because it exceeds GitHub's file size limit.
+
+Place the following files inside the `models/` directory before running the application:
+
+```text
+models/
+├── production_model.joblib
+└── production_preprocessor.joblib
+```
+
 ## Application
 
 The project includes:
@@ -83,6 +106,11 @@ streamlit run app/streamlit_app.py
 
 FastAPI documentation:
 http://127.0.0.1:8000/docs
+
+## Run with Docker
+Build and run the application:
+
+docker compose up --build
 
 ## Author
 

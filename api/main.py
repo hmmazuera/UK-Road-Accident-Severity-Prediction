@@ -8,6 +8,10 @@ app = FastAPI(
     version = "1.0.0"
 )
 
+@app.get("/health")
+def health_check():
+    return {"status": "OK", "message": "The API is running and healthy."}
+
 @app.get("/")
 def root():
     return {"message": "Welcome to the UK Road Accident Severity Prediction API!"}

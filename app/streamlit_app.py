@@ -3,8 +3,9 @@ import streamlit as st
 import pandas as pd
 from constants import *
 from utils import *
+import os
 
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000/predict")
 
 GITHUB_URL = "https://github.com/hmmazuera/UK-Road-Accident-Severity-Prediction"
 LINKEDIN_URL = "https://www.linkedin.com/in/mauricio-mazuera-a0a7a933b/"

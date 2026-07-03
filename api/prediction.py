@@ -6,8 +6,8 @@ import pandas as pd
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-PREPROCESSOR_PATH = BASE_DIR / "models" / "preprocessor.joblib"
-MODEL_PATH = BASE_DIR / "models" / "best_model.joblib"
+PREPROCESSOR_PATH = BASE_DIR / "models" / "production_preprocessor.joblib"
+MODEL_PATH = BASE_DIR / "models" / "production_model.joblib"
 
 SEVERITY_LABELS = {
     1: "Fatal",
