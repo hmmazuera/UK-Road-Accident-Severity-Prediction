@@ -1,165 +1,19 @@
 import requests
 import streamlit as st
 import pandas as pd
-
+from constants import *
+from utils import *
 
 API_URL = "http://127.0.0.1:8000/predict"
 
 GITHUB_URL = "https://github.com/hmmazuera/UK-Road-Accident-Severity-Prediction"
 LINKEDIN_URL = "https://www.linkedin.com/in/mauricio-mazuera-a0a7a933b/"
 
-
-DAY_CODES = {
-    "Sunday": 1,
-    "Monday": 2,
-    "Tuesday": 3,
-    "Wednesday": 4,
-    "Thursday": 5,
-    "Friday": 6,
-    "Saturday": 7,
-}
-
-ROAD_TYPE_CODES = {
-    "Roundabout": 1,
-    "One way street": 2,
-    "Dual carriageway": 3,
-    "Single carriageway": 6,
-    "Slip road": 7,
-    "Unknown": 9,
-}
-
-WEATHER_CODES = {
-    "Fine no high winds": 1,
-    "Raining no high winds": 2,
-    "Snowing no high winds": 3,
-    "Fine with high winds": 4,
-    "Raining with high winds": 5,
-    "Snowing with high winds": 6,
-    "Fog or mist": 7,
-    "Other": 8,
-    "Unknown": 9,
-}
-
-LIGHT_CODES = {
-    "Daylight": 1,
-    "Darkness - lights lit": 4,
-    "Darkness - lights unlit": 5,
-    "Darkness - no lighting": 6,
-    "Darkness - lighting unknown": 7,
-}
-
-ROAD_SURFACE_CODES = {
-    "Dry": 1,
-    "Wet or damp": 2,
-    "Snow": 3,
-    "Frost or ice": 4,
-    "Flood over 3cm": 5,
-    "Oil or diesel": 6,
-    "Mud": 7,
-}
-
-URBAN_RURAL_CODES = {
-    "Urban": 1,
-    "Rural": 2,
-}
-
-CASUALTY_TYPE_CODES = {
-    "Pedestrian": 0,
-    "Cyclist": 1,
-    "Motorcyclist": 5,
-    "Car occupant": 9,
-    "Bus/coach occupant": 11,
-    "Goods vehicle occupant": 19,
-}
-
-
-def get_season(month: int) -> str:
-    if month in [12, 1, 2]:
-        return "Winter"
-    if month in [3, 4, 5]:
-        return "Spring"
-    if month in [6, 7, 8]:
-        return "Summer"
-    return "Autumn"
-
-
-def build_payload(
-    collision_year,
-    longitude,
-    latitude,
-    number_of_vehicles,
-    number_of_casualties,
-    day_of_week,
-    hour,
-    month,
-    road_type,
-    speed_limit,
-    light_conditions,
-    weather_conditions,
-    road_surface_conditions,
-    urban_or_rural_area,
-    average_driver_age,
-    max_driver_age,
-    average_vehicle_age,
-    max_vehicle_age,
-    average_casualty_age,
-    max_casualty_age,
-    pedestrian_count,
-    most_common_casualty_type,
-):
-    weekend = 1 if day_of_week in [1, 7] else 0
-    rush_hour = 1 if hour in [7, 8, 9, 16, 17, 18] else 0
-    season = get_season(month)
-
-    return {
-        "collision_year": collision_year,
-        "location_easting_osgr": 433493.0,
-        "location_northing_osgr": 258232.0,
-        "longitude": longitude,
-        "latitude": latitude,
-        "police_force": 23,
-        "number_of_vehicles": number_of_vehicles,
-        "number_of_casualties": number_of_casualties,
-        "day_of_week": day_of_week,
-        "first_road_class": 3,
-        "road_type": road_type,
-        "speed_limit": speed_limit,
-        "junction_detail": 0,
-        "junction_control": -1,
-        "second_road_class": 0,
-        "pedestrian_crossing": 0,
-        "light_conditions": light_conditions,
-        "weather_conditions": weather_conditions,
-        "road_surface_conditions": road_surface_conditions,
-        "special_conditions_at_site": 0,
-        "carriageway_hazards": 0,
-        "urban_or_rural_area": urban_or_rural_area,
-        "did_police_officer_attend_scene_of_accident": 1,
-        "trunk_road_flag": 2,
-        "average_driver_age": average_driver_age,
-        "max_driver_age": max_driver_age,
-        "average_vehicle_age": average_vehicle_age,
-        "max_vehicle_age": max_vehicle_age,
-        "left_hand_drive_count": number_of_vehicles,
-        "average_casualty_age": average_casualty_age,
-        "max_casualty_age": max_casualty_age,
-        "casualty_count": number_of_casualties,
-        "pedestrian_count": pedestrian_count,
-        "most_common_casualty_type": most_common_casualty_type,
-        "hour": hour,
-        "month": month,
-        "weekend": weekend,
-        "rush_hour": rush_hour,
-        "season": season,
-    }
-
-
 st.set_page_config(
     page_title="UK Road Accident Severity Predictor",
     page_icon="🚗",
     layout="wide",
 )
-
 
 st.markdown(
     """
@@ -172,7 +26,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
 
 with st.form("prediction_form"):
 
@@ -247,14 +100,11 @@ with st.form("prediction_form"):
             "lon": [longitude],
         }
     )
-
     st.map(map_df, zoom=8)
 
     submitted = st.form_submit_button("Predict Severity")
 
-
 if submitted:
-
     payload = build_payload(
         collision_year=collision_year,
         longitude=longitude,
@@ -335,7 +185,6 @@ if submitted:
     except requests.exceptions.RequestException as error:
         st.error("Could not connect to the prediction API.")
         st.write(error)
-
 
 st.markdown("---")
 st.markdown(
