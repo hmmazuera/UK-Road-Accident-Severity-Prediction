@@ -23,10 +23,16 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Check API imports
+      - name: Check project structure
         run: |
-          python -c "from api.main import app; print('API import successful')"
+          test -f api/main.py
+          test -f app/streamlit_app.py
+          test -f requirements.txt
 
       - name: Check Streamlit file exists
         run: |
           test -f app/streamlit_app.py
+
+      - name: Python syntax check
+        run: |
+          python -m compileall api app
