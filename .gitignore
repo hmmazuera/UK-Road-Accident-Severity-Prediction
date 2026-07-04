@@ -12,3 +12,5 @@ models/production_model.joblib
 models/production_preprocessor.joblib
 
 .ipynb_checkpoints/
+
+.Rhistory
