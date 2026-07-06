@@ -93,6 +93,11 @@ The project includes:
 - Prediction probabilities for each severity class
 - Interactive map based on collision location
 
+![Application](app/assets/home.png)
+![Detection](app/assets/prediction_1.png)
+![Distribution](app/assets/prediction_2.png)
+![Result](app/assets/result.png)
+
 ## How to Run Locally
 
 Install dependencies:
